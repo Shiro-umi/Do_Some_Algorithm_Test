@@ -91,51 +91,77 @@ class Solution:
 s = "qw aba fwe dcbcd"
 ```
 为了方便区分在`s`中添加了分隔，其中可以看到又两个回文字串：`aba`和`dcbcd`。当滑动窗口区间为`3`的时候，该窗口首先找到`aba`，扩张后发现不构成回文。  
-但`s`中还存在一个长度为`3`的回文字串`cbc`。所以我们还需要对`cbc`进行扩张，最后得到`dcbcd`作为结果。
-```python  
-class Solution:
+但`s`中还存在一个长度为`3`的回文字串`cbc`。所以我们还需要对`cbc`进行扩张，最后得到`dcbcd`作为结果。扩张窗口的时候我们同样采用二分的方法，将窗口扩张为`win+win//2`。  
+```python 
+class Solution:   
     def checkPolindrome(self, s: str) -> bool:
-        i = 0
-        j = len(s)-1
-        while i<j:
-            if s[i]!=s[j]:
-                return False
-            i+=1
-            j-=1
-        return True
+        return True if s == s[::-1] else False
     
     def longestPalindrome(self, s: str) -> str:
-        if not s:
-            return ''
-        # 二分长度, 直接二分长度不行，因为3个成立，2个有可能不成立
-        # 但是长度为4成立，则2一定成立，长度为5成立，则3一定成立
-        # 因此每次判断两个一奇一偶，不满足才能长度减一。
-        ans = ''
-        l = 0
-        r = len(s)
-        while l<=r:
+        
+        ans, l, r = '', 0, len(s)
+        while l <= r:
             mid = (l+r)//2
-            find = False
-       
-            for i in range(len(s)-mid+1):
-                if self.checkPolindrome(s[i:i+mid]):
-                    find = True
+            palindrome = False
+            
+            # 这里需要同时遍历当前窗口和当前窗口长度+1，才能保证所有情况都被遍历到
+            # 作者使用L和R判断窗口大小的手法很巧妙，值得学习
+            for i in range(len(s)-mid+1):       
+                if (True if s[i:i+mid] == s[i:i+mid][::-1] else False):
+                    palindrome = True
                     ans = s[i:i+mid]
                     break
-                    
             for i in range(len(s)-mid):
-                if self.checkPolindrome(s[i:i+mid+1]):
-                    find = True
+                if (True if s[i:i+mid+1] == s[i:i+mid+1][::-1] else False):
+                    palindrome = True
                     ans = s[i:i+mid+1]
                     break   
-            if find:
-                l = mid + 1
-            else:
-                r = mid - 1
-        return an
+                    
+            l, r = (mid+1, r) if palindrome else (l, mid-1)
+            
+        return ans
 
 #作者：ma-xing
 #链接：https://leetcode-cn.com/problems/longest-palindromic-substring/solution/ti-gong-yi-chong-xin-de-si-lu-er-fen-fa-by-ma-xing/
 #来源：力扣（LeetCode）
-#著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+
+# 动态规划  
+终于出现了！每次提到动态规划我相信很多人都是懵逼的。  
+但仔细想想，其实动态规划的思想并不难，用最简单的解释来说：  
+**通过一个DP矩阵记录下已经得到的状态值，然后通过一个状态转移方程，利用已经得到的状态推断出当前状态**  
+回顾上提到的回文串的性质，我们以`s`中的每一个字符作为坐标，建立一个`size*size`的二位DP矩阵表示`s[L:R]`的状态。将状态初始化为`False`表示非回文。那么根据上面的性质不难推断出如果`DP[L][R] == True`，那么当`s[L-1] == s[R+1]`的时候就能直接得出`s[L+1:R+1]`的状态为`True`。另一个特殊情况 ，`R-L <= 2`的时候只要`s[l] == s[R]`那么`s[L:R]`就一定为回文。  
+那么我们的状态转移方程就可以进行如下表示：  
+```python 
+if s[L] == s[R] and (R-L <= 2 or dp[L+1][R-1]):
+    dp[L][R] = True
+```
+话是这么说，但动态规划真正的难点是把思路转换为代码  
+而这道题的另一个比较难的地方就是，**如何运用状态转移方程才能让算法变得高效**。 
+思考下面的例子：  
+```python  
+s = 'babad'
+```
+观察上面的状态转移方程，我们选用了`dp[L+1][R-1]`作为判断条件是为了试图遍历最少的组合。当`s[l] == s[R]`的时候，只要`dp[L+1][R-1]`为`True`就可以直接得出 `DP[L][R]`为`True`。  
+所以我们只需要保证短序列在长序列之前被遍历就好了。  
+参考下面实现：  
+```python  
+class Solution:   
+    def longestPalindrome(self, s: str) -> str:
+
+        size = len(s)
+        if size <= 1:
+            return s
+        
+        longest = 1
+        res = s[0]
+        dp = [[False for _ in range(size)] for _ in range(size)]
+        
+        for R in range(1, size):
+            for L in range(R):
+                if s[L] == s[R] and (R-L <= 2 or dp[L+1][R-1]):
+                    dp[L][R] = True
+                    (longest, res) = (R-L, s[L:R+1]) if R+1-L > longest else (longest, res)
+        
+        return res
 ```
