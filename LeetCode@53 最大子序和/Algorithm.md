@@ -13,13 +13,13 @@
 其实根据LeetCode上的思路可以这么解释：  
 负数对于序列和是负激励，而非负数对于序列和来说是单纯的激励。这个思想很关键，试想当序列和已经小于0的情况，证明目前的求和序列中从**最后一个非负数(如果存在)后面**负激励过大，那么从下一个数开始我们就可以把前面得到的大负激励序列全部丢弃。这个时候要明确一个问题，就是序列和小于0是因为**最后一个非负数(如果存在)后面负激励过大**，也就是说不存在从被丢弃的序列中间开始计和得到更大结果的情况，所以直接丢弃并不存在例外情况。我们只需要在遍历的过程中记录最大的累加和即可。  
 参考如下思路图解，来源参考：[灵魂画师牧码](https://leetcode-cn.com/problems/maximum-subarray/solution/hua-jie-suan-fa-53-zui-da-zi-xu-he-by-guanpengchn/)   
-![1](https://pic.leetcode-cn.com/5082ef660cbebc30f78132b2a601bc6162e949b5c7db870ed93dadaa239bf186-frame_00001.png)
-![2](https://pic.leetcode-cn.com/536396242aa004db7d2f452a4e086f6a6206d34c6e0f5b58afbdd02fd612e483-frame_00002.png)
-![3](https://pic.leetcode-cn.com/5082ef660cbebc30f78132b2a601bc6162e949b5c7db870ed93dadaa239bf186-frame_00003.png)
-![4](https://pic.leetcode-cn.com/5082ef660cbebc30f78132b2a601bc6162e949b5c7db870ed93dadaa239bf186-frame_00004.png)
-![5](https://pic.leetcode-cn.com/5082ef660cbebc30f78132b2a601bc6162e949b5c7db870ed93dadaa239bf186-frame_00005.png)
-![6](https://pic.leetcode-cn.com/5082ef660cbebc30f78132b2a601bc6162e949b5c7db870ed93dadaa239bf186-frame_00006.png)
-![7](https://pic.leetcode-cn.com/5082ef660cbebc30f78132b2a601bc6162e949b5c7db870ed93dadaa239bf186-frame_00007.png)
+![1](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4053%20%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/1.png)
+![2](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4053%20%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/2.png)
+![3](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4053%20%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/3.png)
+![4](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4053%20%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/4.png)
+![5](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4053%20%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/5.png)
+![6](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4053%20%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/6.png)
+
 
 # 2.代码实现
 实现非常简单，想通了上面说的关键点，只需要另外用一个变量记录`res = max(res, sum)`最后返回就可以了：
