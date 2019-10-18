@@ -46,10 +46,10 @@
 但是第一行和第一列怎么办？这个时候可以在矩阵中引入`""`空字符串，因为空字符串到一个单词的编辑距离就等于单词的长度。  
 ![2](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4072%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/2.png)  
 再看一看我们上面例子中的情况：  
-![3](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4072%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/3.png) 
+![3](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4072%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/3.png)  
 到此为止是不是一目了然了呢？  
 给出完整的dp矩阵，最后我们要的结果就是右下角的数字：  
-![4](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4072%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/4.png) 
+![4](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4072%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/4.png)  
 
 # 3.实现
 思路想明白了之后实现没有太大难度，看图说话就好了，直接上代码：
