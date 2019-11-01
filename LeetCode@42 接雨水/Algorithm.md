@@ -14,11 +14,11 @@ A：..
 [0,1,0,2,1,0,1,3,2,1,2,1]
 ```
 这玩意画成图是这样的：  
-![1](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4072%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/1.png)
+![1](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4042%20%E6%8E%A5%E9%9B%A8%E6%B0%B4/1.png)
 其中红色阴影代表可以接下来的水量。  
 按照常识，两边高中间低(存在坑)才可能存水，并且存水的高度以两边的最低为准。
 那么可以用一个指针`p`指向每一个元素，当出现一个元素大于之前的起始元素的时候，计算两个元素之间的容量：
-![1](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4072%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/1.png)  
+![2](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4042%20%E6%8E%A5%E9%9B%A8%E6%B0%B4/2.png)  
 但是有一个问题，上述方法仅仅在`p >= start`的情况下成立，例子中从`3`之后的元素就不成立了。  
 所以我们可以反过来在用一个指针从后往前遍历，不就好了？  
 所以这道题归根结底，是一个双指针的问题。  
@@ -30,7 +30,7 @@ A：..
 ```python
 [2,0,3,0,3,0,2]
 ```
-![1](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4072%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/1.png)
+![3](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4042%20%E6%8E%A5%E9%9B%A8%E6%B0%B4/3.png)
 这一组中发现了两个最高点，连个指针都停下了，中间的怎么办？其实很容易想到，如果两边都是整组的最高点的话，那么两个最高点中间的任何元素都可以认为是`坑`，最坏的情况是中间是平的，那么`坑`的深度为0，统计进去也不会受到影响。  
 那么问题到这就已经解决了：
 ```python  
