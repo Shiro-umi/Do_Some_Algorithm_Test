@@ -17,7 +17,7 @@
   
 # 实现  
 实现起来也不难，为了更好地理解回溯的过程先上一张从leetcode上弄下来的图。  
-![1](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4042%20%E6%8E%A5%E9%9B%A8%E6%B0%B4/1.png)  
+![1](https://raw.githubusercontent.com/Shiro-umi/Do_Some_Algorithm_Test/master/LeetCode%4035%20%E5%85%A8%E6%8E%92%E5%88%97/1.png)  
 从图中我们可以更直观地看出在我们固定了每一个位置的元素之后发生了什么。  
 这个过程中一共发生了两种操作：  
   
